@@ -1,0 +1,118 @@
+-- Visual pet hatch simulator with drag, ESP, auto random, pet age loader
+-- UI updated to show "ESP EGG" and credit to XtrfScripts
+-- (Everything else remains unchanged)
+
+-- ... [KEEP ALL ORIGINAL SERVICES & petTable AS IS ABOVE THIS LINE] ...
+
+-- Replace this part in your original script starting here:
+
+-- 🌟 GUI Setup
+local screenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+screenGui.Name = "PetHatchGui"
+
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 260, 0, 200)
+frame.Position = UDim2.new(0, 20, 0, 100)
+frame.BackgroundColor3 = Color3.fromRGB(30, 30, 45)
+frame.BackgroundTransparency = 0.1
+frame.BorderSizePixel = 0
+frame.Parent = screenGui
+Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
+
+local title = Instance.new("TextLabel", frame)
+title.Size = UDim2.new(1, 0, 0, 30)
+title.BackgroundTransparency = 1
+title.Text = "👁 ESP EGG"
+title.Font = Enum.Font.FredokaOne
+title.TextSize = 22
+title.TextColor3 = Color3.fromRGB(0, 255, 170)
+
+-- 🖱 Dragging
+local drag = Instance.new("TextButton", title)
+drag.Size = UDim2.new(1, 0, 1, 0)
+drag.Text = ""
+drag.BackgroundTransparency = 1
+
+local dragging, offset
+drag.MouseButton1Down:Connect(function()
+    dragging = true
+    offset = Vector2.new(mouse.X - frame.Position.X.Offset, mouse.Y - frame.Position.Y.Offset)
+end)
+UserInputService.InputEnded:Connect(function()
+    dragging = false
+end)
+RunService.RenderStepped:Connect(function()
+    if dragging then
+        frame.Position = UDim2.new(0, mouse.X - offset.X, 0, mouse.Y - offset.Y)
+    end
+end)
+
+-- 🎲 Randomize Button
+local randomizeBtn = Instance.new("TextButton", frame)
+randomizeBtn.Size = UDim2.new(1, -20, 0, 40)
+randomizeBtn.Position = UDim2.new(0, 10, 0, 40)
+randomizeBtn.BackgroundColor3 = Color3.fromRGB(60, 120, 255)
+randomizeBtn.Text = "🎲 Randomize Pets"
+randomizeBtn.TextSize = 20
+randomizeBtn.Font = Enum.Font.FredokaOne
+randomizeBtn.TextColor3 = Color3.new(1, 1, 1)
+
+-- 👁 ESP Toggle
+local toggleBtn = Instance.new("TextButton", frame)
+toggleBtn.Size = UDim2.new(1, -20, 0, 40)
+toggleBtn.Position = UDim2.new(0, 10, 0, 90)
+toggleBtn.BackgroundColor3 = Color3.fromRGB(255, 180, 0)
+toggleBtn.Text = "👁 ESP: ON"
+toggleBtn.TextSize = 18
+toggleBtn.Font = Enum.Font.FredokaOne
+toggleBtn.TextColor3 = Color3.new(1, 1, 1)
+
+-- 🔁 Auto Randomize
+local autoBtn = Instance.new("TextButton", frame)
+autoBtn.Size = UDim2.new(1, -20, 0, 40)
+autoBtn.Position = UDim2.new(0, 10, 0, 140)
+autoBtn.BackgroundColor3 = Color3.fromRGB(128, 0, 0)
+autoBtn.Text = "🔁 Auto Randomize: OFF"
+autoBtn.TextSize = 16
+autoBtn.Font = Enum.Font.FredokaOne
+autoBtn.TextColor3 = Color3.new(1, 1, 1)
+
+-- ❌ Close Button
+local closeBtn = Instance.new("TextButton", frame)
+closeBtn.Size = UDim2.new(0, 24, 0, 24)
+closeBtn.Position = UDim2.new(1, -28, 0, 4)
+closeBtn.BackgroundColor3 = Color3.fromRGB(180, 50, 50)
+closeBtn.Text = "❌"
+closeBtn.TextSize = 18
+closeBtn.Font = Enum.Font.FredokaOne
+closeBtn.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", closeBtn).CornerRadius = UDim.new(1, 0)
+closeBtn.MouseButton1Click:Connect(function()
+    frame.Visible = false
+end)
+
+-- ☢️ Reopen Button (Mobile Friendly)
+local reopenBtn = Instance.new("TextButton", screenGui)
+reopenBtn.Size = UDim2.new(0, 50, 0, 30)
+reopenBtn.Position = UDim2.new(0, 10, 0, 10)
+reopenBtn.BackgroundColor3 = Color3.fromRGB(0, 128, 255)
+reopenBtn.Text = "☢️"
+reopenBtn.TextSize = 20
+reopenBtn.Font = Enum.Font.FredokaOne
+reopenBtn.TextColor3 = Color3.new(1, 1, 1)
+Instance.new("UICorner", reopenBtn).CornerRadius = UDim.new(0, 8)
+reopenBtn.MouseButton1Click:Connect(function()
+    frame.Visible = not frame.Visible
+end)
+
+-- 🖊 Credit
+local credit = Instance.new("TextLabel", frame)
+credit.Size = UDim2.new(1, 0, 0, 20)
+credit.Position = UDim2.new(0, 0, 0, 22)
+credit.BackgroundTransparency = 1
+credit.Text = "Made by XtrfScripts"
+credit.Font = Enum.Font.FredokaOne
+credit.TextSize = 14
+credit.TextColor3 = Color3.fromRGB(200, 200, 200)
+
+-- ✅ Everything else in your script stays exactly the same (functions, ESP logic, connections).
